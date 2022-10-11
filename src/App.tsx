@@ -1,5 +1,11 @@
+import Frame from "./components/Frame"
+
 function App() {
-  return (<></>)
+  return (
+    <Frame>
+      <></>
+    </Frame>
+  )
 }
 
 export default App
