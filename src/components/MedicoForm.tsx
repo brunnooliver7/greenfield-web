@@ -1,9 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { observer } from "mobx-react-lite";
+import { useContext } from "react";
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
+import MedicoStore from "../stores/MedicoStore";
 
 const MedicoForm = () => {
+
+  const { salvar } = useContext(MedicoStore);
 
   const { handleSubmit, register, formState: { errors }, reset } = useForm({
     mode: "onChange",
@@ -11,7 +16,7 @@ const MedicoForm = () => {
   })
 
   const onSubmit = (data: any) => {
-    // salvar dados
+    salvar(data, () => reset())
   }
 
   const clienteImg = () => {
@@ -125,8 +130,8 @@ const MedicoForm = () => {
             <Button type="submit">Enviar</Button>
           </div>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }
 
@@ -141,4 +146,4 @@ const medicoFormValidationSchema = yup.object().shape({
   senha: yup.string().required(),
 });
 
-export default MedicoForm;
+export default observer(MedicoForm);
