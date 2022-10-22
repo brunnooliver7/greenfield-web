@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
+import UFs from "../constants/UFs";
 import MedicoStore from "../stores/MedicoStore";
 
 const MedicoForm = () => {
@@ -111,9 +112,9 @@ const MedicoForm = () => {
             </div>
             <div>
               <Select label="Estado">
-                <Option>Estado 1</Option>
-                <Option>Estado 2</Option>
-                <Option>Estado 3</Option>
+                {Object.values(UFs).map(uf => (
+                  <Option>{uf}</Option>
+                ))}
               </Select>
               {errors?.estado && <span className="text-xs text-red-600">Informe um Estado</span>}
             </div>
