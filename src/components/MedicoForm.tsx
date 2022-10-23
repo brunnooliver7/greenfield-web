@@ -3,6 +3,7 @@ import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useForm } from 'react-hook-form';
+import { ToastContainer } from "react-toastify";
 import * as yup from "yup";
 import UFs from "../constants/UFs";
 import MedicoStore from "../stores/MedicoStore";
@@ -131,6 +132,7 @@ const MedicoForm = () => {
             <Button type="submit">Enviar</Button>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </div>
   )

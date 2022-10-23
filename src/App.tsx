@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Frame from "./components/Frame"
 import MedicoForm from "./components/MedicoForm"
 import Menu from "./components/Menu"
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

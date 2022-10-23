@@ -1,8 +1,9 @@
-import { observable, action, makeObservable } from "mobx";
-import { createContext } from "react";
-import Medico from "../models/Medico";
 import axios from 'axios';
+import { action, makeObservable, observable } from "mobx";
+import { createContext } from "react";
 import { toast } from "react-toastify";
+import { medicoFalhaToastOptions, medicoSalvoToastOptions } from "../constants/toast";
+import Medico from "../models/Medico";
 
 class MedicoStore {
 
@@ -22,9 +23,10 @@ class MedicoStore {
   salvar = (medico: Medico, onSuccess: Function) => {
     axios.post('http://localhost:8080/medico', medico)
       .then(() => {
+        toast("Médico salvo!", medicoSalvoToastOptions)
         onSuccess();
       })
-      .catch(() => {});
+      .catch(() => toast("Erro ao tentar salvar dados do médico", medicoFalhaToastOptions))
   }
 
   obterMedicos = () => {
@@ -33,7 +35,7 @@ class MedicoStore {
         this.medicos = res.data;
         console.log(res.data)
       })
-      .catch(() => {});
+      .catch(() => toast("Erro ao tentar obter lista de médicos", medicoFalhaToastOptions))
   }
 
   setMostrarForm(value: boolean) {
