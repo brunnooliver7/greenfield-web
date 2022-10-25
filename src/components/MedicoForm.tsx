@@ -3,7 +3,6 @@ import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useForm } from 'react-hook-form';
-import { ToastContainer } from "react-toastify";
 import * as yup from "yup";
 import UFs from "../constants/UFs";
 import MedicoStore from "../stores/MedicoStore";
@@ -114,7 +113,7 @@ const MedicoForm = () => {
             <div>
               <Select label="Estado">
                 {Object.values(UFs).map(uf => (
-                  <Option>{uf}</Option>
+                  <Option key={uf}>{uf}</Option>
                 ))}
               </Select>
               {errors?.estado && <span className="text-xs text-red-600">Informe um Estado</span>}
@@ -132,7 +131,6 @@ const MedicoForm = () => {
             <Button type="submit">Enviar</Button>
           </div>
         </form>
-        <ToastContainer />
       </div>
     </div>
   )
