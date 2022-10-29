@@ -13,7 +13,7 @@ function App() {
           <Menu />
           <div className='overflow-y-scroll scrollbar'>
             <Routes>
-              <Route path="/" element={<>home page</>} />
+              <Route path="/home" element={<>home page</>} />
               <Route path="/medico" element={<MedicoList />} />
               <Route path="/medico/add" element={<MedicoForm />} />
               <Route path="/paciente" element={<>paciente page</>} />
