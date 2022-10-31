@@ -6,12 +6,15 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import UFs from "../constants/UFs";
+import ImgStore from "../stores/ImgStore";
 import MedicoStore from "../stores/MedicoStore";
 import BackButton from "./BackButton";
 
 const MedicoForm = () => {
 
   const { salvar } = useContext(MedicoStore);
+  const { obterImgHomem } = useContext(ImgStore);
+  const navigate = useNavigate();
 
   const { handleSubmit, register, formState: { errors }, reset } = useForm({
     mode: "onChange",
@@ -22,18 +25,6 @@ const MedicoForm = () => {
     salvar(data, () => reset())
   }
 
-  const clienteImg = () => {
-    let link = "https://randomuser.me/api/portraits/men/"
-    const min = 0;
-    const max = 99;
-    const random = Math.floor(Math.random() * (+max - +min)) + +min;
-    link = link.concat(random.toString())
-    link = link.concat(".jpg")
-    return link
-  }
-
-  const navigate = useNavigate();
-
   return (
     <>
       <BackButton onClick={() => navigate('/medico')} />
@@ -42,7 +33,7 @@ const MedicoForm = () => {
           <div className="w-full bg-white p-5 rounded-3xl">
 
             <div className="flex justify-center items-center pb-5">
-              <img src={clienteImg()} alt="" className="rounded-full" />
+              <img src={obterImgHomem()} alt="" className="rounded-full" />
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} >
