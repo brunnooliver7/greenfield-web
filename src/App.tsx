@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Frame from "./components/Frame";
 import MedicoForm from "./components/MedicoForm";
@@ -8,6 +9,7 @@ import Menu from "./components/Menu";
 function App() {
   return (
     <Router>
+      <ToastContainer />
       <Frame>
         <div id="app" className="grid grid-cols-[200px_1fr] w-full h-full">
           <Menu />

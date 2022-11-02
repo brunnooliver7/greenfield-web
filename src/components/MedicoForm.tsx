@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useForm } from 'react-hook-form';
@@ -16,13 +16,13 @@ const MedicoForm = () => {
   const { obterImgHomem } = useContext(ImgStore);
   const navigate = useNavigate();
 
-  const { handleSubmit, register, formState: { errors }, reset } = useForm({
+  const { handleSubmit, register, formState: { errors } } = useForm({
     mode: "onChange",
     resolver: yupResolver(medicoFormValidationSchema)
   })
 
   const onSubmit = (data: any) => {
-    salvar(data, () => reset())
+    salvar(data, () => navigate('/medico'))
   }
 
   return (
@@ -70,13 +70,13 @@ const MedicoForm = () => {
                 </div>
                 <div>
                   <Input
-                    {...register("estadoRegistroCrm")}
+                    {...register("estado_registro_crm")}
                     type="text"
                     variant="outlined"
                     label="Estado de Registro do CRM"
-                    error={Boolean(errors?.estadoRegistroCrm)}
+                    error={Boolean(errors?.estado_registro_crm)}
                   />
-                  {errors?.estadoRegistroCrm && <span className="text-xs text-red-600">Informe um Estado de Registro do CRM</span>}
+                  {errors?.estado_registro_crm && <span className="text-xs text-red-600">Informe um Estado de Registro do CRM</span>}
                 </div>
                 <div>
                   <Input
@@ -90,13 +90,13 @@ const MedicoForm = () => {
                 </div>
                 <div>
                   <Input
-                    {...register("dtNascimento")}
+                    {...register("dt_nascimento")}
                     type="date"
                     variant="outlined"
                     label="Data de Nascimento"
-                    error={Boolean(errors?.dtNascimento)}
+                    error={Boolean(errors?.dt_nascimento)}
                   />
-                  {errors?.dtNascimento && <span className="text-xs text-red-600">Informe uma Data de Nascimento</span>}
+                  {errors?.dt_nascimento && <span className="text-xs text-red-600">Informe uma Data de Nascimento</span>}
                 </div>
                 <div>
                   <Input
@@ -109,11 +109,15 @@ const MedicoForm = () => {
                   {errors?.email && <span className="text-xs text-red-600">Informe um Email</span>}
                 </div>
                 <div>
-                  <Select label="Estado">
-                    {Object.values(UFs).map(uf => (
-                      <Option key={uf}>{uf}</Option>
-                    ))}
-                  </Select>
+                  <span>Estado</span>
+                  <select {...register("estado")}>
+                    {/* <Select label="Estado"> */}
+                    <option>{null}</option>
+                      {Object.values(UFs).map(uf => (
+                        <option key={uf}>{uf.toString()}</option>
+                      ))}
+                    {/* </Select> */}
+                  </select>
                   {errors?.estado && <span className="text-xs text-red-600">Informe um Estado</span>}
                 </div>
                 <div>
@@ -140,11 +144,12 @@ const medicoFormValidationSchema = yup.object().shape({
   nome: yup.string().required(),
   cpf: yup.string().required(),
   crm: yup.string().required(),
-  dtNascimento: yup.string().required(),
+  dt_nascimento: yup.string().required(),
   email: yup.string().required(),
-  estadoRegistroCrm: yup.string().required(),
+  estado_registro_crm: yup.string().required(),
   sexo: yup.string().required(),
   senha: yup.string().required(),
+  estado: yup.string().required(),
 });
 
 export default observer(MedicoForm);
