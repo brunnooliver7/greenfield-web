@@ -3,11 +3,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Menu = () => {
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   const homeMenuItemSelected = useMemo(() => {
@@ -39,23 +38,23 @@ const Menu = () => {
         <hr className="my-2 text-gray-600" />
       </div>
       <div className="basis-10/12 flex flex-col">
-      <div className={`
+        <Link
+          className={`
             mt-2
             flex justify-left items-center w-full
             rounded-full  
             duration-100 
             cursor-pointer 
             ${homeMenuItemSelected
-            ? 'bg-green-400 text-white'
-            : 'text-gray-600'}
+              ? 'bg-green-400 text-white'
+              : 'text-gray-600'}
             hover:${homeMenuItemSelected
-            ? ''
-            : 'bg-gray-300'}
+              ? ''
+              : 'bg-gray-300'}
             hover:pl-3
           `}
-          onClick={() => {
-            navigate('/home')
-          }}>
+          to={"home"}
+        >
           <div className="
               m-2.5 ml-5
               flex justify-left items-center 
@@ -65,24 +64,24 @@ const Menu = () => {
             <FontAwesomeIcon icon={faHome} />
             <span className="text-[15px] ml-4 font-bold">Home</span>
           </div>
-        </div>
-        <div className={`
+        </Link>
+        <Link
+          className={`
             mt-2
             flex justify-left items-center w-full
             rounded-full  
             duration-100 
             cursor-pointer 
             ${medicoMenuItemSelected
-            ? 'bg-green-400 text-white'
-            : 'text-gray-600'}
+              ? 'bg-green-400 text-white'
+              : 'text-gray-600'}
             hover:${medicoMenuItemSelected
-            ? ''
-            : 'bg-gray-300'}
+              ? ''
+              : 'bg-gray-300'}
             hover:pl-3
           `}
-          onClick={() => {
-            navigate('/medico')
-          }}>
+          to="medico"
+        >
           <div className="
               m-2.5 ml-5
               flex justify-left items-center 
@@ -92,8 +91,8 @@ const Menu = () => {
             <FontAwesomeIcon icon={faUserDoctor} />
             <span className="text-[15px] ml-4 font-bold">Médicos</span>
           </div>
-        </div>
-        <div className={`
+        </Link>
+        <Link className={`
             mt-2
             flex justify-left items-center w-full
             rounded-full  
@@ -107,9 +106,8 @@ const Menu = () => {
             : 'bg-gray-300'}
             hover:pl-3
           `}
-          onClick={() => {
-            navigate('/paciente')
-          }}>
+          to="paciente"
+        >
           <div className="
               m-2.5 ml-5
               flex justify-left items-center 
@@ -119,8 +117,8 @@ const Menu = () => {
             <FontAwesomeIcon icon={faHospitalUser} />
             <span className="text-[15px] ml-4 font-bold">Pacientes</span>
           </div>
-        </div>
-        <div className={`
+        </Link>
+        <Link className={`
             mt-2
             flex justify-left items-center w-full
             rounded-full  
@@ -134,9 +132,8 @@ const Menu = () => {
             : 'bg-gray-300'}
             hover:pl-3
           `}
-          onClick={() => {
-            navigate('/prescricao')
-          }}>
+          to="prescricao"
+        >
           <div className="
               m-2.5 ml-5
               flex justify-left items-center 
@@ -146,7 +143,7 @@ const Menu = () => {
             <FontAwesomeIcon icon={faPenToSquare} />
             <span className="text-[15px] ml-4 font-bold">Prescrições</span>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="basis-1/12">
