@@ -2,13 +2,15 @@ import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FormMode } from "../enums/FormMode";
 import ImgStore from "../stores/ImgStore";
 import MedicoStore from "../stores/MedicoStore";
 
 const TabelaListaMedicos = () => {
 
   const { obterImgHomem, obterImgMulher } = useContext(ImgStore);
-  const { obterMedicos, medicos } = useContext(MedicoStore);
+  const { obterMedicos, medicos, setFormMode, setMedico } = useContext(MedicoStore);
 
   useEffect(() => {
     obterMedicos();
@@ -79,9 +81,15 @@ const TabelaListaMedicos = () => {
             <td className="w-20">
               <div className="flex flex-row justify-center gap-2">
                 <div className="flex justify-center bg-yellow-700 rounded-full p-2 w-9 hover:bg-yellow-800 hover:cursor-pointer group">
-                  <button>
+                  <Link
+                    onClick={() => {
+                      setMedico(medico);
+                      setFormMode(FormMode.EDIT)
+                    }}
+                    to={"form"}
+                  >
                     <FontAwesomeIcon icon={faPen} className="text-yellow-400 group-hover:text-white" />
-                  </button>
+                  </Link>
                 </div>
                 <div className="flex justify-center bg-red-600 rounded-full p-2 w-9 hover:bg-red-800 hover:cursor-pointer group">
                   <button>

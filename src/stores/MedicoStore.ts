@@ -3,20 +3,27 @@ import { action, makeObservable, observable } from "mobx";
 import { createContext } from "react";
 import { toast } from "react-toastify";
 import { medicoFalhaToastOptions, medicoSalvoToastOptions } from "../constants/toast";
+import { FormMode } from '../enums/FormMode';
 import Medico from "../models/Medico";
 
 class MedicoStore {
 
   medicos: Medico[] = [];
-  mostrarForm: boolean = false;
+  medico: Medico | undefined;
+  formMode: FormMode = FormMode.ADD;
 
   constructor() {
     makeObservable(this, {
       medicos: observable,
-      mostrarForm: observable,
-      salvar: action.bound,
-      setMostrarForm: action.bound,
+      medico: observable,
+      formMode: observable,
+
       obterMedicos: action.bound,
+      salvar: action.bound,
+      editar: action.bound,
+
+      setMedico: action.bound,
+      setFormMode: action.bound,
     });
   }
 
@@ -29,6 +36,18 @@ class MedicoStore {
       .catch(() => toast("Erro ao tentar salvar dados do médico", medicoFalhaToastOptions))
   }
 
+  editar = (medico: Medico, onSuccess: Function) => {
+    axios.put('http://localhost:8080/medico', medico)
+      .then(() => {
+        toast("Médico atualizado!", medicoSalvoToastOptions)
+        onSuccess();
+      })
+      .catch(() => toast("Erro ao tentar atualizar dados do médico", medicoFalhaToastOptions))
+      .finally(() => {
+        this.setFormMode(FormMode.ADD)
+      })
+  }
+
   obterMedicos = () => {
     axios.get('http://localhost:8080/medico')
       .then((res) => {
@@ -38,9 +57,14 @@ class MedicoStore {
       .catch(() => toast("Erro ao tentar obter lista de médicos", medicoFalhaToastOptions))
   }
 
-  setMostrarForm(value: boolean) {
-    this.mostrarForm = value;
+  setMedico(medico: Medico) {
+    this.medico = medico;
   }
+
+  setFormMode(formMode: FormMode) {
+    this.formMode = formMode;
+  }
+
 }
 
 export default createContext(new MedicoStore());

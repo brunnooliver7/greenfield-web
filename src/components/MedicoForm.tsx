@@ -1,33 +1,52 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Input } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import UFs from "../constants/UFs";
+import UFs from "../enums/UFs";
+import { FormMode } from "../enums/FormMode";
 import ImgStore from "../stores/ImgStore";
 import MedicoStore from "../stores/MedicoStore";
 import BackButton from "./BackButton";
+import Medico from "../models/Medico";
 
 const MedicoForm = () => {
 
-  const { salvar } = useContext(MedicoStore);
+  const { salvar, editar, formMode, setFormMode, medico } = useContext(MedicoStore);
   const { obterImgHomem } = useContext(ImgStore);
   const navigate = useNavigate();
 
-  const { handleSubmit, register, formState: { errors } } = useForm({
+  const { handleSubmit, register, setValue, formState: { errors } } = useForm({
     mode: "onChange",
     resolver: yupResolver(medicoFormValidationSchema)
   })
 
+  useEffect(() => {
+    if (formMode === FormMode.EDIT && medico) {
+      Object.keys(medico).forEach(key => {
+        setValue(key, medico[key as keyof Medico])
+      });
+    }
+  }, [formMode, medico])
+
   const onSubmit = (data: any) => {
-    salvar(data, () => navigate('/medico'))
+    if (formMode === FormMode.ADD) {
+      salvar(data, () => navigate('/medico'))
+    }
+
+    if (formMode === FormMode.EDIT) {
+      editar(data, () => navigate('/medico'))
+    }
   }
 
   return (
     <>
-      <BackButton onClick={() => navigate('/medico')} />
+      <BackButton onClick={() => {
+        navigate('/medico')
+        setFormMode(FormMode.ADD)
+      }}/>
       <div className='overflow-y-scroll scrollbar'>
         <div className="flex justify-center items-center h-full">
           <div id="medico-form" className="w-96 rounded-full flex justify-center items-center p-5">
