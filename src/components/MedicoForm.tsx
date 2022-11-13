@@ -1,16 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Input } from "@material-tailwind/react";
+import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import UFs from "../enums/UFs";
 import { FormMode } from "../enums/FormMode";
+import UFs from "../enums/UFs";
+import Medico from "../models/Medico";
 import ImgStore from "../stores/ImgStore";
 import MedicoStore from "../stores/MedicoStore";
 import BackButton from "./BackButton";
-import Medico from "../models/Medico";
 
 const MedicoForm = () => {
 
@@ -18,7 +18,7 @@ const MedicoForm = () => {
   const { obterImgHomem } = useContext(ImgStore);
   const navigate = useNavigate();
 
-  const { handleSubmit, register, setValue, formState: { errors } } = useForm({
+  const { handleSubmit, register, control, setValue, formState: { errors } } = useForm({
     mode: "onChange",
     resolver: yupResolver(medicoFormValidationSchema)
   })
@@ -46,7 +46,7 @@ const MedicoForm = () => {
       <BackButton onClick={() => {
         navigate('/medico')
         setFormMode(FormMode.ADD)
-      }}/>
+      }} />
       <div className='overflow-y-scroll scrollbar'>
         <div className="flex justify-center items-center h-full">
           <div id="medico-form" className="w-96 rounded-full flex justify-center items-center p-5">
@@ -129,15 +129,23 @@ const MedicoForm = () => {
                     {errors?.email && <span className="text-xs text-red-600">Informe um Email</span>}
                   </div>
                   <div>
-                    <span>Estado</span>
-                    <select {...register("estado")}>
-                      {/* <Select label="Estado"> */}
-                      <option>{null}</option>
-                      {Object.values(UFs).map(uf => (
-                        <option key={uf}>{uf.toString()}</option>
-                      ))}
-                      {/* </Select> */}
-                    </select>
+                    <Controller
+                      name={"estado"}
+                      control={control}
+                      render={({ field: { onChange: SelectOnChange } }) =>
+                        <Select
+                          label="Estado"
+                          onChange={(uf) => SelectOnChange(uf)}
+                          error={Boolean(errors?.estado)}
+                        >
+                          {Object.values(UFs).map(uf => (
+                            <Option key={uf} value={uf}>
+                              {uf.toString()}
+                            </Option>
+                          ))}
+                        </Select>
+                      }
+                    />
                     {errors?.estado && <span className="text-xs text-red-600">Informe um Estado</span>}
                   </div>
                   <div>
@@ -156,7 +164,7 @@ const MedicoForm = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }
