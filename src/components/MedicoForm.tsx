@@ -58,6 +58,8 @@ const MedicoForm = () => {
 
               <form onSubmit={handleSubmit(onSubmit)} >
                 <div className="grid grid-rows-1 gap-4">
+
+                  {/* Nome */}
                   <div>
                     <Input
                       {...register("nome")}
@@ -66,8 +68,9 @@ const MedicoForm = () => {
                       label="Nome"
                       error={Boolean(errors?.nome)}
                     />
-                    {errors?.nome && <span className="text-xs text-red-600">Informe um nome</span>}
+                    {errors?.nome && <span className="text-xs text-red-600">{errors?.nome?.message?.toString()}</span>}
                   </div>
+
                   <div>
                     <Input
                       {...register("cpf")}
@@ -170,7 +173,8 @@ const MedicoForm = () => {
 }
 
 const medicoFormValidationSchema = yup.object().shape({
-  nome: yup.string().required(),
+  nome: yup.string()
+    .required('Informe um nome'),
   cpf: yup.string().required(),
   crm: yup.string().required(),
   dt_nascimento: yup.string().required(),
