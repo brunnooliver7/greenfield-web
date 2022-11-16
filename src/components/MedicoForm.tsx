@@ -3,6 +3,7 @@ import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Controller, useForm } from 'react-hook-form';
+import ReactInputMask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { FormMode } from "../enums/FormMode";
@@ -71,16 +72,38 @@ const MedicoForm = () => {
                     {errors?.nome && <span className="text-xs text-red-600">{errors?.nome?.message?.toString()}</span>}
                   </div>
 
+                  {/* CPF */}
                   <div>
-                    <Input
-                      {...register("cpf")}
-                      type="text"
-                      variant="outlined"
-                      label="CPF"
-                      error={Boolean(errors?.cpf)}
+                    <Controller
+                      name="cpf"
+                      control={control}
+                      defaultValue=""
+                      render={({
+                        field: { onChange, ...rest }
+                      }) => (
+                        <ReactInputMask
+                          {...rest}
+                          mask="999.999.999-99"
+                          maskChar=""
+                          onChange={(e) => {
+                            onChange(String(e.target.value));
+                          }}
+                        >
+                          {/* @ts-ignore */}
+                          {() =>
+                            <Input
+                              type="text"
+                              variant="outlined"
+                              label="CPF"
+                              error={Boolean(errors?.cpf)}
+                            />
+                          }
+                        </ReactInputMask>
+                      )}
                     />
-                    {errors?.cpf && <span className="text-xs text-red-600">Informe um CPF</span>}
+                    {errors?.cpf && <span className="text-xs text-red-600">{errors?.cpf?.message?.toString()}</span>}
                   </div>
+
                   <div>
                     <Input
                       {...register("crm")}
@@ -175,7 +198,9 @@ const MedicoForm = () => {
 const medicoFormValidationSchema = yup.object().shape({
   nome: yup.string()
     .required('Informe um nome'),
-  cpf: yup.string().required(),
+  cpf: yup.string()
+    .required('Informe um CPF')
+    .length(14, 'O CPF deve conter 11 dígitos'),
   crm: yup.string().required(),
   dt_nascimento: yup.string().required(),
   email: yup.string().required(),
