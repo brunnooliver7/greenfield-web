@@ -79,14 +79,14 @@ const MedicoForm = () => {
                       control={control}
                       defaultValue=""
                       render={({
-                        field: { onChange, ...rest }
+                        field: { onChange: controllerOnChange, ...rest }
                       }) => (
                         <ReactInputMask
                           {...rest}
                           mask="999.999.999-99"
                           maskChar=""
                           onChange={(e) => {
-                            onChange(String(e.target.value));
+                            controllerOnChange(String(e.target.value));
                           }}
                         >
                           {/* @ts-ignore */}
@@ -104,16 +104,38 @@ const MedicoForm = () => {
                     {errors?.cpf && <span className="text-xs text-red-600">{errors?.cpf?.message?.toString()}</span>}
                   </div>
 
+                  {/* CRM */}
                   <div>
-                    <Input
-                      {...register("crm")}
-                      type="text"
-                      variant="outlined"
-                      label="CRM"
-                      error={Boolean(errors?.crm)}
+                    <Controller
+                      name='crm'
+                      control={control}
+                      defaultValue=""
+                      render={({
+                        field: { onChange: controllerOnChange, ...rest }
+                      }) => (
+                        <ReactInputMask
+                          {...rest}
+                          mask="999999"
+                          maskChar=""
+                          onChange={(e) => {
+                            controllerOnChange(String(e.target.value));
+                          }}
+                        >
+                          {/* @ts-ignore */}
+                          {() =>
+                            <Input
+                              type="text"
+                              variant="outlined"
+                              label="CRM"
+                              error={Boolean(errors?.crm)}
+                            />
+                          }
+                        </ReactInputMask>
+                      )}
                     />
-                    {errors?.crm && <span className="text-xs text-red-600">Informe um CRM</span>}
+                    {errors?.crm && <span className="text-xs text-red-600">{errors?.crm?.message?.toString()}</span>}
                   </div>
+
                   <div>
                     <Input
                       {...register("estado_registro_crm")}
@@ -201,7 +223,9 @@ const medicoFormValidationSchema = yup.object().shape({
   cpf: yup.string()
     .required('Informe um CPF')
     .length(14, 'O CPF deve conter 11 dígitos'),
-  crm: yup.string().required(),
+  crm: yup.string()
+    .required('Informe um CRM')
+    .length(6, 'O CRM deve conter 6 dígitos'),
   dt_nascimento: yup.string().required(),
   email: yup.string().required(),
   estado_registro_crm: yup.string().required(),
