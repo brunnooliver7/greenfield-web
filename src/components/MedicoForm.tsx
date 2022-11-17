@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import ReactInputMask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
+import { EstadosRegistroCRM } from "../enums/EstadoRegistroCRM";
 import { FormMode } from "../enums/FormMode";
 import UFs from "../enums/UFs";
 import Medico from "../models/Medico";
@@ -136,16 +137,28 @@ const MedicoForm = () => {
                     {errors?.crm && <span className="text-xs text-red-600">{errors?.crm?.message?.toString()}</span>}
                   </div>
 
+                  {/* Estado de Registro do CRM */}
                   <div>
-                    <Input
-                      {...register("estado_registro_crm")}
-                      type="text"
-                      variant="outlined"
-                      label="Estado de Registro do CRM"
-                      error={Boolean(errors?.estado_registro_crm)}
+                    <Controller
+                      name={"estado_registro_crm"}
+                      control={control}
+                      render={({ field: { onChange: controllerOnChange } }) =>
+                        <Select
+                          label="Estado de registro do CRM"
+                          onChange={(estado_registro_crm) => controllerOnChange(estado_registro_crm)}
+                          error={Boolean(errors?.estado_registro_crm)}
+                        >
+                          {Object.values(EstadosRegistroCRM).map(estado_registro_crm => (
+                            <Option key={estado_registro_crm} value={estado_registro_crm}>
+                              {estado_registro_crm.toString()}
+                            </Option>
+                          ))}
+                        </Select>
+                      }
                     />
-                    {errors?.estado_registro_crm && <span className="text-xs text-red-600">Informe um Estado de Registro do CRM</span>}
+                    {errors?.estado_registro_crm && <span className="text-xs text-red-600">{errors?.estado_registro_crm?.message?.toString()}</span>}
                   </div>
+
                   <div>
                     <Input
                       {...register("sexo")}
@@ -226,9 +239,10 @@ const medicoFormValidationSchema = yup.object().shape({
   crm: yup.string()
     .required('Informe um CRM')
     .length(6, 'O CRM deve conter 6 dígitos'),
+  estado_registro_crm: yup.string()
+    .required('Informe um estado de registro do CRM'),
   dt_nascimento: yup.string().required(),
   email: yup.string().required(),
-  estado_registro_crm: yup.string().required(),
   sexo: yup.string().required(),
   senha: yup.string().required(),
   estado: yup.string().required(),
