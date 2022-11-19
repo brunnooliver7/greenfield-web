@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { EstadosRegistroCRM } from "../enums/EstadoRegistroCRM";
 import { FormMode } from "../enums/FormMode";
+import { Sexos } from "../enums/Sexos";
 import UFs from "../enums/UFs";
 import Medico from "../models/Medico";
 import ImgStore from "../stores/ImgStore";
@@ -159,15 +160,26 @@ const MedicoForm = () => {
                     {errors?.estado_registro_crm && <span className="text-xs text-red-600">{errors?.estado_registro_crm?.message?.toString()}</span>}
                   </div>
 
+                  {/* Sexo */}
                   <div>
-                    <Input
-                      {...register("sexo")}
-                      type="text"
-                      variant="outlined"
-                      label="Sexo"
-                      error={Boolean(errors?.sexo)}
+                    <Controller
+                      name={"sexo"}
+                      control={control}
+                      render={({ field: { onChange: controllerOnChange } }) =>
+                        <Select
+                          label="Sexo"
+                          onChange={(sexo) => controllerOnChange(sexo)}
+                          error={Boolean(errors?.sexo)}
+                        >
+                          {Object.values(Sexos).map(sexo => (
+                            <Option key={sexo} value={sexo}>
+                              {sexo.toString()}
+                            </Option>
+                          ))}
+                        </Select>
+                      }
                     />
-                    {errors?.sexo && <span className="text-xs text-red-600">Informe um Sexo</span>}
+                    {errors?.sexo && <span className="text-xs text-red-600">{errors?.sexo?.message?.toString()}</span>}
                   </div>
                   <div>
                     <Input
@@ -241,9 +253,9 @@ const medicoFormValidationSchema = yup.object().shape({
     .length(6, 'O CRM deve conter 6 dígitos'),
   estado_registro_crm: yup.string()
     .required('Informe um estado de registro do CRM'),
+  sexo: yup.string().required('Informe um sexo'),
   dt_nascimento: yup.string().required(),
   email: yup.string().required(),
-  sexo: yup.string().required(),
   senha: yup.string().required(),
   estado: yup.string().required(),
 });
