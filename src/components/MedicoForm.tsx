@@ -181,6 +181,8 @@ const MedicoForm = () => {
                     />
                     {errors?.sexo && <span className="text-xs text-red-600">{errors?.sexo?.message?.toString()}</span>}
                   </div>
+
+                  {/* Data de Nascimento */}
                   <div>
                     <Input
                       {...register("dt_nascimento")}
@@ -189,8 +191,9 @@ const MedicoForm = () => {
                       label="Data de Nascimento"
                       error={Boolean(errors?.dt_nascimento)}
                     />
-                    {errors?.dt_nascimento && <span className="text-xs text-red-600">Informe uma Data de Nascimento</span>}
+                    {errors?.dt_nascimento && <span className="text-xs text-red-600">{errors?.dt_nascimento?.message?.toString()}</span>}
                   </div>
+
                   <div>
                     <Input
                       {...register("email")}
@@ -254,7 +257,8 @@ const medicoFormValidationSchema = yup.object().shape({
   estado_registro_crm: yup.string()
     .required('Informe um estado de registro do CRM'),
   sexo: yup.string().required('Informe um sexo'),
-  dt_nascimento: yup.string().required(),
+  dt_nascimento: yup.string()
+    .required('Informe uma Data de Nascimento'),
   email: yup.string().required(),
   senha: yup.string().required(),
   estado: yup.string().required(),
