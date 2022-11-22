@@ -206,6 +206,7 @@ const MedicoForm = () => {
                     {errors?.email && <span className="text-xs text-red-600">{errors?.email?.message?.toString()}</span>}
                   </div>
 
+                  {/* Estado */}
                   <div>
                     <Controller
                       name={"estado"}
@@ -224,8 +225,9 @@ const MedicoForm = () => {
                         </Select>
                       }
                     />
-                    {errors?.estado && <span className="text-xs text-red-600">Informe um Estado</span>}
+                    {errors?.estado && <span className="text-xs text-red-600">{errors?.estado?.message?.toString()}</span>}
                   </div>
+
                   <div>
                     <Input
                       {...register("senha")}
@@ -264,8 +266,9 @@ const medicoFormValidationSchema = yup.object().shape({
   email: yup.string()
     .email('Informe um email válido')
     .required('Informe um Email'),
+  estado: yup.string()
+    .required('Informe um Estado'),
   senha: yup.string().required(),
-  estado: yup.string().required(),
 });
 
 export default observer(MedicoForm);
