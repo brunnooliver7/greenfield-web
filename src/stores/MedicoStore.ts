@@ -48,13 +48,14 @@ class MedicoStore {
       })
   }
 
-  obterMedicos = () => {
-    axios.get('http://localhost:8080/medico')
-      .then((res) => {
-        this.medicos = res.data;
-        console.log(res.data)
-      })
+  obterMedicos = async () => {
+    let medicos;
+
+    await fetch('http://localhost:8080/medico')
+      .then(res => { medicos = res.json() })
       .catch(() => toast("Erro ao tentar obter lista de médicos", medicoFalhaToastOptions))
+
+    return medicos ?? undefined;
   }
 
   setMedico(medico: Medico) {

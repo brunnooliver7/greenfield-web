@@ -2,19 +2,23 @@ import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
+import { useQuery, UseQueryResult } from "react-query";
 import { Link } from "react-router-dom";
 import { FormMode } from "../enums/FormMode";
+import Medico from "../models/Medico";
 import ImgStore from "../stores/ImgStore";
 import MedicoStore from "../stores/MedicoStore";
 
 const TabelaListaMedicos = () => {
 
   const { obterImgHomem, obterImgMulher } = useContext(ImgStore);
-  const { obterMedicos, medicos, setFormMode, setMedico } = useContext(MedicoStore);
+  const { obterMedicos, setFormMode, setMedico } = useContext(MedicoStore);
 
-  useEffect(() => {
-    obterMedicos();
-  }, [])
+  const { data: medicos }: UseQueryResult<Medico[], Error> = useQuery('medicos', obterMedicos, {
+    retry: false,
+  });
+
+  useEffect(() => {console.log(medicos)}, [medicos]);
 
   const headTitles = [
     '',
@@ -31,6 +35,7 @@ const TabelaListaMedicos = () => {
         <tr className="text-sm font-semibold text-black">
           {headTitles.map(headTitle => (
             <th
+              key={headTitle}
               className={`py-4 border-b border-gray-400 
                 ${headTitle === 'Ações' ? 'text-center' : 'text-left'}
                 ${headTitle === 'Nome' ? 'pl-2' : ''}`}
@@ -41,8 +46,8 @@ const TabelaListaMedicos = () => {
         </tr>
       </thead>
       <tbody>
-        {medicos.map(medico => (
-          <tr className="text-sm text-black">
+        {medicos?.map((medico: Medico) => (
+          <tr key={medico.id} className="text-sm text-black">
 
             {/* Img */}
             <td className="w-14">
