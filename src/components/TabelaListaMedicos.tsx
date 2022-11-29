@@ -18,7 +18,7 @@ const TabelaListaMedicos = () => {
     retry: false,
   });
 
-  useEffect(() => {console.log(medicos)}, [medicos]);
+  useEffect(() => { console.log(medicos) }, [medicos]);
 
   const headTitles = [
     '',
@@ -85,17 +85,19 @@ const TabelaListaMedicos = () => {
             {/* Acoes */}
             <td className="w-20">
               <div className="flex flex-row justify-center gap-2">
-                <div className="flex justify-center bg-yellow-700 rounded-full p-2 w-9 hover:bg-yellow-800 hover:cursor-pointer group">
-                  <Link
-                    onClick={() => {
-                      setMedico(medico);
-                      setFormMode(FormMode.EDIT)
-                    }}
-                    to={"form"}
-                  >
-                    <FontAwesomeIcon icon={faPen} className="text-yellow-400 group-hover:text-white" />
-                  </Link>
-                </div>
+                <Link
+                  onClick={() => {
+                    setMedico(medico);
+                    setFormMode(FormMode.EDIT)
+                  }}
+                  to={"form"}
+                >
+                  <div className="flex justify-center bg-yellow-700 rounded-full p-2 w-9 hover:bg-yellow-800 hover:cursor-pointer group">
+                    <button>
+                      <FontAwesomeIcon icon={faPen} className="text-yellow-400 group-hover:text-white" />
+                    </button>
+                  </div>
+                </Link>
                 <div className="flex justify-center bg-red-600 rounded-full p-2 w-9 hover:bg-red-800 hover:cursor-pointer group">
                   <button>
                     <FontAwesomeIcon icon={faTrash} className="text-red-50 group-hover:text-white" />
