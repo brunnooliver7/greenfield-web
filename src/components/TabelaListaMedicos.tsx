@@ -1,9 +1,10 @@
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { Link } from "react-router-dom";
+import { EstadosRegistroCRM } from "../enums/EstadoRegistroCRM";
 import { FormMode } from "../enums/FormMode";
 import Medico from "../models/Medico";
 import ImgStore from "../stores/ImgStore";
@@ -17,8 +18,6 @@ const TabelaListaMedicos = () => {
   const { data: medicos }: UseQueryResult<Medico[], Error> = useQuery('medicos', obterMedicos, {
     retry: false,
   });
-
-  useEffect(() => { console.log(medicos) }, [medicos]);
 
   const headTitles = [
     '',
@@ -75,8 +74,8 @@ const TabelaListaMedicos = () => {
             <td className="w-32">
               <span className={
                 `flex justify-center py-1 w-24 capitalize rounded-full font-bold 
-                  ${medico.estado_registro_crm === 'ativo' ? 'bg-green-700/80 text-green-100' : ''} 
-                  ${medico.estado_registro_crm === 'suspenso' ? 'bg-orange-700/60 text-yellow-50' : ''}`}
+                  ${medico.estado_registro_crm.toLowerCase() === EstadosRegistroCRM.ATIVO.toLowerCase() ? 'bg-green-700/80 text-green-100' : ''} 
+                  ${medico.estado_registro_crm.toLowerCase() === EstadosRegistroCRM.SUSPENSO.toLowerCase() ? 'bg-orange-700/60 text-yellow-50' : ''}`}
               >
                 {medico.estado_registro_crm}
               </span>
