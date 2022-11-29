@@ -31,6 +31,7 @@ const MedicoForm = () => {
       Object.keys(medico).forEach(key => {
         setValue(key, medico[key as keyof Medico])
       });
+      setValue('sexo', medico.sexo == 'M' ? Sexos.MASCULINO : Sexos.FEMININO);
     }
   }, [formMode, medico])
 
@@ -143,8 +144,9 @@ const MedicoForm = () => {
                     <Controller
                       name={"estado_registro_crm"}
                       control={control}
-                      render={({ field: { onChange: controllerOnChange } }) =>
+                      render={({ field: { onChange: controllerOnChange, value } }) =>
                         <Select
+                          value={value}
                           label="Estado de registro do CRM"
                           onChange={(estado_registro_crm) => controllerOnChange(estado_registro_crm)}
                           error={Boolean(errors?.estado_registro_crm)}
@@ -165,8 +167,9 @@ const MedicoForm = () => {
                     <Controller
                       name={"sexo"}
                       control={control}
-                      render={({ field: { onChange: controllerOnChange } }) =>
+                      render={({ field: { onChange: controllerOnChange, value } }) =>
                         <Select
+                          value={value}
                           label="Sexo"
                           onChange={(sexo) => controllerOnChange(sexo)}
                           error={Boolean(errors?.sexo)}
@@ -211,10 +214,11 @@ const MedicoForm = () => {
                     <Controller
                       name={"estado"}
                       control={control}
-                      render={({ field: { onChange: SelectOnChange } }) =>
+                      render={({ field: { onChange: controllerOnChange, value } }) =>
                         <Select
+                          value={value}
                           label="Estado"
-                          onChange={(uf) => SelectOnChange(uf)}
+                          onChange={(uf) => controllerOnChange(uf)}
                           error={Boolean(errors?.estado)}
                         >
                           {Object.values(UFs).map(uf => (
