@@ -28,12 +28,20 @@ const MedicoForm = () => {
 
   useEffect(() => {
     if (formMode === FormMode.EDIT && medico) {
-      Object.keys(medico).forEach(key => {
-        setValue(key, medico[key as keyof Medico])
-      });
-      setValue('sexo', medico.sexo == 'M' ? Sexos.MASCULINO : Sexos.FEMININO);
+      preencherCamposModoEdicao(medico);
     }
-  }, [formMode, medico])
+  }, [formMode, medico]);
+
+  const preencherCamposModoEdicao = (medico: Medico) => {
+    Object.keys(medico).forEach(key => {
+      setValue(key, medico[key as keyof Medico])
+    });
+    setValue(
+      'estado_registro_crm',
+      Object.values(EstadosRegistroCRM).find(e => e.toLowerCase() === medico.estado_registro_crm.toLowerCase())
+    )
+    setValue('sexo', medico.sexo == 'M' ? Sexos.MASCULINO : Sexos.FEMININO);
+  }
 
   const onSubmit = (data: any) => {
     if (formMode === FormMode.ADD) {
