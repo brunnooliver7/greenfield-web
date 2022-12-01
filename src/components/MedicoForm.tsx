@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Input, Option, Select } from '@material-tailwind/react'
 import { observer } from 'mobx-react-lite'
 import { useContext, useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
 import ReactInputMask from 'react-input-mask'
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
@@ -51,13 +51,13 @@ const MedicoForm = () => {
     setValue('sexo', medico.sexo == 'M' ? Sexos.MASCULINO : Sexos.FEMININO)
   }
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FieldValues) => {
     if (formMode === FormMode.ADD) {
-      salvar(data, () => navigate('/medico'))
+      salvar(data as Medico, () => navigate('/medico'))
     }
 
     if (formMode === FormMode.EDIT) {
-      editar(data, () => navigate('/medico'))
+      editar(data as Medico, () => navigate('/medico'))
     }
   }
 
