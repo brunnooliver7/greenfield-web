@@ -1,9 +1,9 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { observer } from "mobx-react-lite";
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { observer } from 'mobx-react-lite'
 
 interface PlusButtonProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 function PlusButton({ onClick }: PlusButtonProps) {
@@ -14,8 +14,7 @@ function PlusButton({ onClick }: PlusButtonProps) {
     >
       <FontAwesomeIcon icon={faPlus} className="text-gray-400" />
     </button>
-
   )
 }
 
-export default observer(PlusButton);
+export default observer(PlusButton)

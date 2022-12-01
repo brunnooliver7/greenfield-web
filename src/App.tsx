@@ -1,10 +1,10 @@
-import { Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import Frame from "./components/Frame";
-import MedicoForm from "./components/MedicoForm";
-import MedicoList from "./components/MedicoList";
-import Menu from "./components/Menu";
+import { Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Frame from './components/Frame'
+import MedicoForm from './components/MedicoForm'
+import MedicoList from './components/MedicoList'
+import Menu from './components/Menu'
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Frame>
         <div id="app" className="grid grid-cols-[200px_1fr] w-full h-full">
           <Menu />
-          <div className='overflow-y-scroll scrollbar'>
+          <div className="overflow-y-scroll scrollbar">
             <Routes>
               <Route path="home" element={<>home page</>} />
               <Route path="medico" element={<MedicoList />} />

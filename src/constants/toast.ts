@@ -1,4 +1,4 @@
-import { toast } from "react-toastify"
+import { toast } from 'react-toastify'
 
 const medicoSalvoToastOptions = {
   type: toast.TYPE.SUCCESS,
@@ -12,7 +12,4 @@ const medicoFalhaToastOptions = {
   position: toast.POSITION.TOP_CENTER,
 }
 
-export {
-  medicoSalvoToastOptions,
-  medicoFalhaToastOptions
-}
+export { medicoSalvoToastOptions, medicoFalhaToastOptions }

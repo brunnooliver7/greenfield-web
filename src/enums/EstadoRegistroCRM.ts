@@ -1,5 +1,5 @@
 export enum EstadosRegistroCRM {
-  ATIVO = "Ativo",
-  INATIVO = "Inativo",
-  SUSPENSO = "Suspenso"
+  ATIVO = 'Ativo',
+  INATIVO = 'Inativo',
+  SUSPENSO = 'Suspenso',
 }

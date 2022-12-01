@@ -1,9 +1,9 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { observer } from "mobx-react-lite";
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { observer } from 'mobx-react-lite'
 
 interface BackButtonProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }
 
 function BackButton({ onClick }: BackButtonProps) {
@@ -14,8 +14,7 @@ function BackButton({ onClick }: BackButtonProps) {
     >
       <FontAwesomeIcon icon={faArrowLeft} className="text-gray-400" />
     </button>
-
   )
 }
 
-export default observer(BackButton);
+export default observer(BackButton)
