@@ -23,6 +23,9 @@
     "quotes": ["error", "single"],
     "no-duplicate-imports": "error",
     "@typescript-eslint/ban-ts-comment": "off",
-    "no-console": "warn"
+    "no-console": "warn",
+    "prettier/prettier": ["error",{
+      "endOfLine": "auto"}
+    ]
   }
 }
